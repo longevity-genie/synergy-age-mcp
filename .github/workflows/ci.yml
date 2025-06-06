@@ -1,0 +1,139 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      run: uv python install ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: uv sync --dev
+
+    - name: Run tests
+      run: uv run pytest -vvv -s
+
+    - name: Test MCP server functionality
+      run: |
+        # Test that the server can be imported and instantiated
+        uv run python -c "
+        import sys
+        sys.path.insert(0, 'src')
+        from synergy_age_mcp.server import SynergyAgeMCP
+        print('✓ Server can be imported')
+        try:
+            # Test basic instantiation (will download DB from HuggingFace)
+            server = SynergyAgeMCP()
+            print('✓ Server can be instantiated')
+            print(f'✓ Database path: {server.db_manager.db_path}')
+            # Test that database is accessible
+            result = server.db_manager.execute_query('SELECT COUNT(*) as count FROM sqlite_master WHERE type=\"table\"')
+            print(f'✓ Database has {result.rows[0][\"count\"]} tables')
+        except Exception as e:
+            print(f'✗ Server instantiation failed: {e}')
+            sys.exit(1)
+        "
+        
+        # Test server script help (should exit cleanly)
+        uv run server --help
+
+  test-windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      run: uv python install ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: uv sync --dev
+
+    - name: Run tests
+      run: uv run pytest -vvv -s
+
+    - name: Test MCP server functionality
+      shell: pwsh
+      run: |
+        # Test that the server can be imported and instantiated
+        uv run python -c "
+        import sys
+        sys.path.insert(0, 'src')
+        from synergy_age_mcp.server import SynergyAgeMCP
+        print('✓ Server can be imported')
+        try:
+            # Test basic instantiation (will download DB from HuggingFace)
+            server = SynergyAgeMCP()
+            print('✓ Server can be instantiated')
+            print(f'✓ Database path: {server.db_manager.db_path}')
+            # Test that database is accessible
+            result = server.db_manager.execute_query('SELECT COUNT(*) as count FROM sqlite_master WHERE type=\"table\"')
+            print(f'✓ Database has {result.rows[0][\"count\"]} tables')
+        except Exception as e:
+            print(f'✗ Server instantiation failed: {e}')
+            sys.exit(1)
+        "
+        
+        # Test server script
+        uv run server --help
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Set up Python
+      run: uv python install 3.11
+
+    - name: Install dependencies
+      run: uv sync --dev
+
+    - name: Check code formatting
+      run: |
+        uv run ruff check .
+        uv run ruff format --check .
+      continue-on-error: true
+
+  lint-windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Set up Python
+      run: uv python install 3.11
+
+    - name: Install dependencies
+      run: uv sync --dev
+
+    - name: Check code formatting
+      run: |
+        uv run ruff check .
+        uv run ruff format --check .
+      continue-on-error: true 

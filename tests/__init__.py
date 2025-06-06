@@ -1,0 +1,1 @@
+# Tests for SynergyAge MCP server 

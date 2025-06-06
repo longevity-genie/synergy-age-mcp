@@ -1,0 +1,32 @@
+[
+    {
+        "question": "What are the synergistic interactions involving daf-2 mutations in C. elegans?",
+        "answer": "daf-2 mutations show synergistic interactions with eat-2 (caloric restriction mimetic) and skn-1 (oxidative stress response) mutations, where the combined effects enhance lifespan extension beyond what would be expected from adding individual effects.",
+        "sql": "SELECT m1.genes as gene1, m2.genes as gene2, mi.phenotype_comparison FROM model_interactions mi JOIN models m1 ON mi.id1 = m1.id JOIN models m2 ON mi.id2 = m2.id WHERE m1.genes LIKE '%daf-2%' OR m2.genes LIKE '%daf-2%'"
+    },
+    {
+        "question": "Which genetic interventions show the largest positive effects on lifespan in C. elegans?",
+        "answer": "In C. elegans, daf-2 mutations show the largest positive effect with 85.2% lifespan increase, followed by skn-1 mutations with 45.8% increase, and eat-2 mutations with 25.6% increase.",
+        "sql": "SELECT genes, effect, details FROM models WHERE tax_id = 6239 AND effect > 0 ORDER BY effect DESC"
+    },
+    {
+        "question": "What types of synergistic interactions are found between longevity interventions?",
+        "answer": "The database contains several types of interactions: synergistic enhancement (positive synergy where combined effects exceed individual effects), antagonistic interactions (where one intervention suppresses another), epistatic interactions (dependency relationships), and additive effects across species.",
+        "sql": "SELECT DISTINCT phenotype_comparison FROM model_interactions"
+    },
+    {
+        "question": "How do insulin signaling pathway interventions compare across different model organisms?",
+        "answer": "Insulin signaling interventions show conserved longevity effects across species: daf-2 in C. elegans (85.2% increase), InR knockout in Drosophila (45.3% increase), and IGF1R heterozygous knockout in mice (18.9% increase), suggesting this pathway is evolutionarily conserved for longevity.",
+        "sql": "SELECT tax_id, genes, effect, details FROM models WHERE genes LIKE '%daf-2%' OR genes LIKE '%InR%' OR genes LIKE '%IGF1R%'"
+    },
+    {
+        "question": "Which interventions show negative effects on lifespan and why?",
+        "answer": "Several interventions show negative lifespan effects: daf-16 mutations (-15.7% effect) because they disrupt the FOXO transcription factor essential for longevity, sir-2.1 knockout (-22.3%) due to loss of sirtuin function, and age-1 mutations (-45.2%) from disrupting the PI3K pathway.",
+        "sql": "SELECT genes, effect, details FROM models WHERE effect < 0 ORDER BY effect ASC"
+    },
+    {
+        "question": "What is the relationship between daf-2 and daf-16 mutations?",
+        "answer": "daf-16 mutation completely suppresses the extended lifespan of daf-2 mutants, showing an epistatic interaction where daf-16 (FOXO) is required downstream of daf-2 (insulin receptor) for lifespan extension.",
+        "sql": "SELECT mi.phenotype_comparison, m1.genes, m2.genes FROM model_interactions mi JOIN models m1 ON mi.id1 = m1.id JOIN models m2 ON mi.id2 = m2.id WHERE (m1.genes LIKE '%daf-2%' AND m2.genes LIKE '%daf-16%') OR (m1.genes LIKE '%daf-16%' AND m2.genes LIKE '%daf-2%')"
+    }
+] 
