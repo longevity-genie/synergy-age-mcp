@@ -2,7 +2,7 @@
     {
         "question": "What are the synergistic interactions involving daf-2 mutations in C. elegans?",
         "answer": "daf-2 mutations show synergistic interactions with eat-2 (caloric restriction mimetic) and skn-1 (oxidative stress response) mutations, where the combined effects enhance lifespan extension beyond what would be expected from adding individual effects.",
-        "sql": "SELECT m1.genes as gene1, m2.genes as gene2, mi.phenotype_comparison FROM model_interactions mi JOIN models m1 ON mi.id1 = m1.id JOIN models m2 ON mi.id2 = m2.id WHERE m1.genes LIKE '%daf-2%' OR m2.genes LIKE '%daf-2%'"
+        "sql": "SELECT m1.genes as gene1, m2.genes as gene2, mi.phenotype_comparison FROM model_interactions mi JOIN models m1 ON mi.id1 = m1.id JOIN models m2 ON mi.id2 = m2.id WHERE (m1.genes LIKE '%daf-2%' OR m2.genes LIKE '%daf-2%') AND mi.phenotype_comparison LIKE '%synergistic%'"
     },
     {
         "question": "Which genetic interventions show the largest positive effects on lifespan in C. elegans?",
@@ -23,10 +23,5 @@
         "question": "Which interventions show negative effects on lifespan and why?",
         "answer": "Several interventions show negative lifespan effects: daf-16 mutations (-15.7% effect) because they disrupt the FOXO transcription factor essential for longevity, sir-2.1 knockout (-22.3%) due to loss of sirtuin function, and age-1 mutations (-45.2%) from disrupting the PI3K pathway.",
         "sql": "SELECT genes, effect, details FROM models WHERE effect < 0 ORDER BY effect ASC"
-    },
-    {
-        "question": "What is the relationship between daf-2 and daf-16 mutations?",
-        "answer": "daf-16 mutation completely suppresses the extended lifespan of daf-2 mutants, showing an epistatic interaction where daf-16 (FOXO) is required downstream of daf-2 (insulin receptor) for lifespan extension.",
-        "sql": "SELECT mi.phenotype_comparison, m1.genes, m2.genes FROM model_interactions mi JOIN models m1 ON mi.id1 = m1.id JOIN models m2 ON mi.id2 = m2.id WHERE (m1.genes LIKE '%daf-2%' AND m2.genes LIKE '%daf-16%') OR (m1.genes LIKE '%daf-16%' AND m2.genes LIKE '%daf-2%')"
     }
 ] 

@@ -33,15 +33,7 @@ dependencies = [
     "huggingface-hub>=0.32.4",
 ]
 
-[project.optional-dependencies]
-dev = [
-    "pytest>=7.0.0",
-    "pytest-asyncio>=0.21.0",
-    "black>=23.0.0",
-    "ruff>=0.1.0",
-    "mypy>=1.0.0",
-    "pre-commit>=3.0.0",
-]
+
 
 [project.urls]
 Homepage = "https://github.com/gerontomics/synergy-age-mcp"
@@ -135,5 +127,12 @@ asyncio_mode = "auto"
 
 [dependency-groups]
 dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+    "pre-commit>=3.0.0",
     "sqlite-utils>=3.38",
+    "just-agents-core>=0.7.4",
 ]

@@ -8,12 +8,50 @@ from pathlib import Path
 import sys
 import json
 import asyncio
+import time
+import gc
+import os
 
 # Add the src directory to Python path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from synergy_age_mcp.server import SynergyAgeMCP, DatabaseManager
 from fastmcp import Client
+
+
+def safe_delete_db_file(db_path: Path, max_retries: int = 5):
+    """
+    Safely delete a database file with retry mechanism for Windows file locking issues.
+    
+    Args:
+        db_path: Path to the database file to delete
+        max_retries: Maximum number of deletion attempts
+    """
+    # Force garbage collection to release any remaining references
+    gc.collect()
+    
+    # Retry deletion with exponential backoff for Windows compatibility
+    for attempt in range(max_retries):
+        try:
+            if db_path.exists():
+                db_path.unlink()
+            break
+        except PermissionError:
+            if attempt < max_retries - 1:
+                # Wait with exponential backoff
+                time.sleep(0.1 * (2 ** attempt))
+                gc.collect()  # Try garbage collection again
+            else:
+                # On final attempt, try alternative deletion methods
+                try:
+                    if os.name == 'nt':  # Windows
+                        # Try to delete with os.remove as fallback
+                        os.remove(str(db_path))
+                    else:
+                        raise
+                except:
+                    # If all else fails, just pass - the temp file will be cleaned up eventually
+                    pass
 
 
 @pytest.mark.asyncio
@@ -57,7 +95,8 @@ async def test_basic_server_client():
         assert response_data["rows"][0]["total"] == 1
     
     # Cleanup
-    db_path.unlink()
+    del server
+    safe_delete_db_file(db_path)
 
 
 if __name__ == "__main__":

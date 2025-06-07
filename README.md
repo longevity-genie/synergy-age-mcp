@@ -1,7 +1,7 @@
 # synergy-age-mcp
 
-[![Tests](https://github.com/gerontomics/synergy-age-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/gerontomics/synergy-age-mcp/actions/workflows/test.yml)
-[![CI](https://github.com/gerontomics/synergy-age-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/gerontomics/synergy-age-mcp/actions/workflows/ci.yml)
+[![Tests](https://github.com/longevity-genie/synergy-age-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/longevity-genie/synergy-age-mcp/actions/workflows/test.yml)
+[![CI](https://github.com/longevity-genie/synergy-age-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/longevity-genie/synergy-age-mcp/actions/workflows/ci.yml)
 [![PyPI version](https://badge.fury.io/py/synergy-age-mcp.svg)](https://badge.fury.io/py/synergy-age-mcp)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -11,7 +11,7 @@ MCP (Model Context Protocol) server for SynergyAge database
 
 This server implements the Model Context Protocol (MCP) for SynergyAge, providing a standardized interface for accessing synergistic genetic intervention and aging research data. MCP enables AI assistants and agents to query comprehensive longevity datasets through structured interfaces.
 
-The server automatically downloads the latest SynergyAge database and documentation from [Hugging Face Hub](https://huggingface.co/longevity-genie/bio-mcp-data) (specifically from the `synergy-age` folder), ensuring you always have access to the most up-to-date data without manual file management.
+The server automatically downloads the latest SynergyAge database and documentation from [Hugging Face Hub](httpss://huggingface.co/datasets/longevity-genie/bio-mcp-data) (specifically from the `synergy-age` folder), ensuring you always have access to the most up-to-date data without manual file management.
 
 The SynergyAge database contains:
 
@@ -19,6 +19,18 @@ The SynergyAge database contains:
 - **model_interactions**: Synergistic, antagonistic, and epistatic interactions between genetic interventions
 - **Data for multiple model organisms**: C. elegans, Drosophila melanogaster, mice, and other aging research models
 - **Quantitative lifespan effects**: Precise measurements of intervention effectiveness
+
+## Understanding Genetic Interactions
+
+The SynergyAge database focuses on different types of genetic interactions that affect lifespan:
+
+![SynergyAge Genetic Interactions](https://www.synergyage.info/static/curation/images/SynergyAgeFigs3.4.png)
+
+*Figure: Types of genetic interactions in longevity research - synergistic, antagonistic, and additive effects between genetic interventions (Source: [SynergyAge.info](https://www.synergyage.info))*
+
+- **Synergistic interactions**: Combined interventions produce greater effects than the sum of individual effects
+- **Antagonistic interactions**: Combined interventions produce smaller effects than expected, with one intervention suppressing another
+- **Additive interactions**: Combined interventions produce effects equal to the sum of individual effects
 
 If you want to understand more about what the Model Context Protocol is and how to use it more efficiently, you can take the [DeepLearning AI Course](https://www.deeplearning.ai/short-courses/mcp-build-rich-context-ai-apps-with-anthropic/) or search for MCP videos on YouTube.
 
@@ -65,7 +77,7 @@ All survival curves from included papers are manually verified to ensure data ac
 
 ## Data Source and Updates
 
-The SynergyAge MCP server automatically downloads data from the [longevity-genie/bio-mcp-data](https://huggingface.co/longevity-genie/bio-mcp-data) repository on Hugging Face Hub. This ensures:
+The SynergyAge MCP server automatically downloads data from the [longevity-genie/bio-mcp-data](httpss://huggingface.co/datasets/longevity-genie/bio-mcp-data) repository on Hugging Face Hub. This ensures:
 
 - **Always Up-to-Date**: Automatic access to the latest SynergyAge database without manual updates
 - **Reliable Distribution**: Centralized data hosting with version control and change tracking
@@ -200,7 +212,7 @@ Simply point your AI client (like Cursor, Windsurf, ClaudeDesktop, VS Code with 
 
 ```bash
 # Clone the repository
-git clone https://github.com/gerontomics/synergy-age-mcp.git
+git clone https://github.com/longevity-genie/synergy-age-mcp.git
 cd synergy-age-mcp
 uv sync
 ```
@@ -336,6 +348,11 @@ You can use MCP inspector with locally built MCP server same way as with uvx.
 <details>
 <summary>Research questions you can explore with this MCP server</summary>
 
+* What are the synergistic interactions involving daf-2 mutations in C. elegans?
+* Which genetic interventions show the largest positive effects on lifespan in C. elegans?
+* What types of synergistic interactions are found between longevity interventions?
+* How do insulin signaling pathway interventions compare across different model organisms?
+* Which interventions show negative effects on lifespan and why?
 * Which genetic interventions show the strongest synergistic effects in C. elegans?
 * What are the most effective single-gene interventions for lifespan extension across model organisms?
 * How do insulin signaling pathway interventions compare between C. elegans, Drosophila, and mice?
@@ -410,6 +427,12 @@ While we provide comprehensive tests including LLM-as-a-judge evaluations, not a
 ## License
 
 This project is licensed under the MIT License.
+
+## Citations
+
+If you use SynergyAge data in your research, please cite:
+
+Bunu, G., Toren, D., Ion, C. et al. SynergyAge, a curated database for synergistic and antagonistic interactions of longevity-associated genes. *Sci Data* **7**, 366 (2020). https://doi.org/10.1038/s41597-020-00710-z
 
 ## Acknowledgments
 
