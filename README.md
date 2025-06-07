@@ -20,6 +20,14 @@ The SynergyAge database contains:
 - **Data for multiple model organisms**: C. elegans, Drosophila melanogaster, mice, and other aging research models
 - **Quantitative lifespan effects**: Precise measurements of intervention effectiveness
 
+## Usage Example
+
+![SynergyAge MCP Usage Example](images/synergy_example.jpg)
+
+Here's how the SynergyAge MCP server works in practice with AI assistants:
+
+*Example showing how to query the SynergyAge database through an AI assistant using natural language, which gets translated to SQL queries via the MCP server. You can use this database both in chat interfaces for research questions and in AI-based development tools (like Cursor, Windsurf, VS Code with Copilot) to significantly improve your aging and longevity research productivity by having direct access to synergistic intervention data while coding.*
+
 ## Understanding Genetic Interactions
 
 The SynergyAge database focuses on different types of genetic interactions that affect lifespan:
@@ -33,12 +41,6 @@ The SynergyAge database focuses on different types of genetic interactions that 
 - **Additive interactions**: Combined interventions produce effects equal to the sum of individual effects
 
 If you want to understand more about what the Model Context Protocol is and how to use it more efficiently, you can take the [DeepLearning AI Course](https://www.deeplearning.ai/short-courses/mcp-build-rich-context-ai-apps-with-anthropic/) or search for MCP videos on YouTube.
-
-## Usage Example
-
-Here's how the SynergyAge MCP server works in practice with AI assistants:
-
-*Example showing how to query the SynergyAge database through an AI assistant using natural language, which gets translated to SQL queries via the MCP server. You can use this database both in chat interfaces for research questions and in AI-based development tools (like Cursor, Windsurf, VS Code with Copilot) to significantly improve your aging and longevity research productivity by having direct access to synergistic intervention data while coding.*
 
 ## About MCP (Model Context Protocol)
 
